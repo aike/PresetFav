@@ -35,7 +35,7 @@ function App() {
 
   return (
     <div style={{ margin: '2rem' }}>
-      <h1>プリセットレーティングアプリ</h1>
+      <h1>Roland MC-101 Presets</h1>
 
       {/* ログイン/ログアウトUI */}
       {user ? (
@@ -61,8 +61,9 @@ function App() {
           return (
             <li key={preset.id} style={{ marginBottom: '1rem' }}>
               <div>
-                <strong>{preset.name}</strong> 
+                {preset.name} 
                 {/* タグの表示 */}
+                <span style={{ marginLeft: '1rem', color: 'black' }}>Bank {preset.bank}</span>
                 <span style={{ marginLeft: '1rem', color: 'gray' }}>[{preset.tags.join(', ')}]</span>
               </div>
               <div>
@@ -73,7 +74,7 @@ function App() {
                     style={{ 
                       cursor: user ? 'pointer' : 'default',
                       color: star <= currentRating ? 'gold' : 'lightgray',
-                      fontSize: '1.5rem'
+                      fontSize: '1.0rem'
                     }}
                     onClick={() => user && handleRatingChange(preset.id, star)}
                   >
