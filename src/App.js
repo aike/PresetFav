@@ -19,6 +19,10 @@ function App() {
     const unsubAuth = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
+
+        // 名前の代わりにこの画像を表示する
+        console.log(currentUser.photoURL);
+
         // ログインしたらレーティングを購読開始
         const unsubRatings = subscribeUserRatings(currentUser.uid, (ratingsMap) => {
           setUserRatings(ratingsMap);
@@ -72,30 +76,32 @@ function App() {
     await setRating(user.uid, presetId, newRating);
   };
 
-  const ListItems = (props) => (
-    <tr><td className="cat">{props.category}</td><td className="key">{props.keyassign}</td><td className="cmd">{props.command}</td></tr>
-  );
+  const ListItems = (props) => {
+    const ratingData = userRatings[props.id] || {};
+    const currentRating = ratingData.rating || 0;  // デフォルト0
+    return (
+      <tr><td className="cat">{props.number}</td><td className="key">{props.name}</td><td className="cmd">{props.category}</td>
+      <td>
+      {
+        [1,2,3,4,5].map(star => (
+        <span
+          key={star}
+          style={{ 
+            cursor: user ? 'pointer' : 'default',
+            color: user ? (star <= currentRating ? '#f0f0a0' : '#606060') : '#0000',
+            fontSize: '1.0rem'
+          }}
+          onClick={() => user && handleRatingChange(props.id, star)}
+        >
+          ★
+        </span>
+      ))}
+      </td>
+    </tr>
+  )};
 
   return (
     <div className='App'>
-      <h1>Roland MC-101 Presets</h1>
-
-      {/* ログイン/ログアウトUI */}
-      {user ? (
-        <div>
-          <p>ログイン中: {user.displayName} / {user.email}</p>
-          <button onClick={logout}>ログアウト</button>
-        </div>
-      ) : (
-        <div>
-          <p>ログアウト中</p>
-          <button onClick={signInWithGoogle}>Google でログイン</button>
-        </div>
-      )}
-
-      <hr />
-
-      {/* プリセット一覧表示 */}
       <div className="datatable-container">
         <div className="header-tools">
           <div className="search">
@@ -105,54 +111,33 @@ function App() {
               onClick={() => setShowList(true)}
             />
           </div>
-          <div id="app_title">ALL YOUR CUBASE ARE BELONG TO US <span id="subtitle">- Cubase Keyassign Easy Search Tool -</span></div>
-        </div>        
+          <div id="app_title">MC-101 Presets 
+            <span id="subtitle">- Easy Search Tool -</span>
+          </div>
+          {user ? (
+            <div id="userarea">
+              <img className="usericon" src={user.photoURL} alt="user" title={user.displayName} />
+              <span className="loginout" onClick={logout}>Logout</span>
+            </div>
+          ) : (
+            <div id="userarea">
+              <span className="loginout" onClick={signInWithGoogle}>Login</span>
+            </div>
+          )}
+
+        </div>
         <table className="datatable">
           <thead>
-            <tr><th id="tab_cath">NUMBER</th><th id="tab_keyh">NAME</th><th id="tab_cmdh">CATEGORY</th></tr>
+            <tr><th id="tab_cath">NUMBER</th><th id="tab_keyh">NAME</th><th id="tab_cmdh">CATEGORY</th>
+            {user ? (<th id="tab_star">RATING</th>) : (<th id="tab_star" style={{color:"gray"}}>RATING (need login)</th>)}
+            </tr>
           </thead>
           <tbody>
             {showList &&
-            filteredList.map((preset) => <ListItems key={preset.id} category={preset.number} keyassign={preset.name} command={preset.category} />)}
+            filteredList.map((preset) => <ListItems id={preset.id} number={preset.number} name={preset.name} category={preset.category} />)}
           </tbody>
         </table>
       </div>
-      {/*
-      <ul>
-        {PRESETS.map((preset) => {
-          const ratingData = userRatings[preset.id] || {};
-          const currentRating = ratingData.rating || 0;  // デフォルト0
-          
-          return (
-            <li key={preset.id} style={{ marginBottom: '1rem' }}>
-              <div>
-                {preset.name} 
-                {// タグの表示 }
-                <span style={{ marginLeft: '1rem', color: 'black' }}>Bank {preset.bank}</span>
-                <span style={{ marginLeft: '1rem', color: 'gray' }}>[{preset.tags.join(', ')}]</span>
-              </div>
-              <div>
-                {// ★レーティングUI(簡易版) }
-                {[1,2,3,4,5].map(star => (
-                  <span
-                    key={star}
-                    style={{ 
-                      cursor: user ? 'pointer' : 'default',
-                      color: star <= currentRating ? 'gold' : 'lightgray',
-                      fontSize: '1.0rem'
-                    }}
-                    onClick={() => user && handleRatingChange(preset.id, star)}
-                  >
-                    ★
-                  </span>
-                ))}
-                <span style={{ marginLeft: '1rem' }}>({currentRating})</span>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-      */}
     </div>
   );
 }
