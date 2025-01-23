@@ -20,9 +20,6 @@ function App() {
       setUser(currentUser);
       if (currentUser) {
 
-        // 名前の代わりにこの画像を表示する
-        console.log(currentUser.photoURL);
-
         // ログインしたらレーティングを購読開始
         const unsubRatings = subscribeUserRatings(currentUser.uid, (ratingsMap) => {
           setUserRatings(ratingsMap);
@@ -35,30 +32,35 @@ function App() {
       }
     });
 
+    const ret = () => unsubAuth();
+
     if (inputRef.current) {
       const node = inputRef.current;
       node.focus();
       setShowList(true);
     }
 
+    // 検索フォームが空欄の場合、絞り込みを解除
     if (keyword === "") {
       setFilteredList(PRESETS);
-      return;
+      return ret;
     }
 
+    // 検索文字列をトリム、小文字変換
     const searchKeyword = keyword
       .trim()
       .toLowerCase();
 
-    if ((searchKeyword.length >= 1) && (searchKeyword.length <= 1)) {
+    //トリム後の検索文字列が1文字の場合、絞り込みに時間がかかるのを回避するため０件表示
+    if (searchKeyword.length === 1) {
       setFilteredList([]);
-      return;
+      return ret;
     }
     
-    //入力されたキーワードが空白のみの場合
+    //トリム後の検索文字列が0文字の場合
     if (searchKeyword === null) {
       setFilteredList(PRESETS);
-      return;
+      return ret;
     }
 
     const result = PRESETS.filter((preset) =>
@@ -66,8 +68,7 @@ function App() {
     );
     setFilteredList(result.length ? result : [["No Item Found"]]);
 
-    // TODO: この意味を調べる
-    return () => unsubAuth();
+    return ret;
   }, [keyword]);
 
   const handleRatingChange = async (presetId, newRating) => {
