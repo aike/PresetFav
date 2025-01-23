@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { auth, signInWithGoogle, logout, setRating, subscribeUserRatings } from './firebase';
+import { auth, signInWithGoogle, signInWithX, logout, setRating, subscribeUserRatings } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { PRESETS } from './presets';
 import './App.css';
@@ -80,7 +80,7 @@ function App() {
     const ratingData = userRatings[props.id] || {};
     const currentRating = ratingData.rating || 0;  // デフォルト0
     return (
-      <tr><td className="cat">{props.number}</td><td className="key">{props.name}</td><td className="cmd">{props.category}</td>
+      <tr key={props.id}><td className="number">{props.number}</td><td className="name">{props.name}</td><td className="cat">{props.category}</td>
       <td>
       {
         [1,2,3,4,5].map(star => (
@@ -111,8 +111,8 @@ function App() {
               onClick={() => setShowList(true)}
             />
           </div>
-          <div id="app_title">MC-101 Presets 
-            <span id="subtitle">- Easy Search Tool -</span>
+          <div id="app_title">Preset Fav [MC-101] 
+            <span id="subtitle">Easy Search Tool</span>
           </div>
           {user ? (
             <div id="userarea">
@@ -121,7 +121,7 @@ function App() {
             </div>
           ) : (
             <div id="userarea">
-              <span className="loginout" onClick={signInWithGoogle}>Login</span>
+              <span className="loginout" onClick={signInWithX}>Login</span>
             </div>
           )}
 
@@ -129,7 +129,7 @@ function App() {
         <table className="datatable">
           <thead>
             <tr><th id="tab_cath">NUMBER</th><th id="tab_keyh">NAME</th><th id="tab_cmdh">CATEGORY</th>
-            {user ? (<th id="tab_star">RATING</th>) : (<th id="tab_star" style={{color:"gray"}}>RATING (need login)</th>)}
+            {user ? (<th id="tab_star">FAVORITE</th>) : (<th id="tab_star" style={{color:"gray"}}>FAVORITE (need login)</th>)}
             </tr>
           </thead>
           <tbody>

@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from "firebase/analytics";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, TwitterAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 import { getFirestore, doc, setDoc, collection, onSnapshot } from 'firebase/firestore';
 import { firebaseConfig } from './firebaseConfig';
 
@@ -12,6 +12,12 @@ export const db = getFirestore(app);
 // Googleログイン
 export const signInWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
+  await signInWithPopup(auth, provider);
+};
+
+// Googleログイン
+export const signInWithX = async () => {
+  const provider = new TwitterAuthProvider();
   await signInWithPopup(auth, provider);
 };
 

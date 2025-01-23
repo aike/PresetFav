@@ -70,23 +70,23 @@
   color: #eee;
 }
 
-.cat {
+.number {
   color: #8f8;
 }
 
-.key {
+.name {
   color: #ff8;
 }
 
-.cmd {
+.cat {
   color: #8ff;
 }
 
 .usericon {
   border-radius:50%;
   border: solid 1.2px #888;
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   vertical-align:middle;
 }
 
@@ -135,7 +135,7 @@ h2 {
     --dt-status-away-color: lightsalmon;
     --dt-status-offline-color: lightgray;
   
-    --dt-padding: 12px;
+    --dt-padding: 2px;
     --dt-padding-s: 6px;
     --dt-padding-xs: 2px;
   
@@ -186,6 +186,7 @@ h2 {
   .datatable-container .header-tools .search {
     margin-left: 30px;
     width: 250px;
+    padding: 12px 0px;
   }
   
   .datatable-container .header-tools .search .search-input {
