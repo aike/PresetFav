@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu';
+import '@szhsin/react-menu/dist/index.css';
+import "@szhsin/react-menu/dist/theme-dark.css";
 import { auth, signInWithX, logout, setRating, subscribeUserRatings } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { PRESETS } from './presets';
@@ -105,7 +108,7 @@ function App() {
 
   const ListItems = (props) => {
     return (
-      <tr><td className="number">{props.number}</td><td className="name">{props.name}</td><td className="cat">{props.category}</td>
+      <tr><td className="number">{props.number}</td><td className="cat">{props.category}</td><td className="name">{props.name}</td>
       <td>
       {
         [1,2,3,4,5].map(star => (
@@ -141,13 +144,16 @@ function App() {
           </div>
           {user ? (
             <div id="userarea">
-              <img className="usericon" src={user.photoURL} alt="user" title={user.displayName} />
-              <span className="loginout" onClick={logout}>Logout</span>
-            </div>
+              <Menu theming="dark" menuButton={<img className="usericon" src={user.photoURL} alt="user" title={user.displayName} />} transition>
+                <MenuItem>Export</MenuItem>
+                <MenuItem onClick={logout}>Log Out</MenuItem>
+              </Menu>  
+              </div>
           ) : (
             <div id="userarea">
               <span className="loginout" onClick={signInWithX}>Login</span>
             </div>
+          
           )}
 
         </div>
@@ -155,8 +161,8 @@ function App() {
           <thead>
             <tr>
               <th id="tab_id" onClick={()=>onSort('id')}>NUMBER<span className="tab_sortmark">{sort.key==='id' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>
-              <th id="tab_name" onClick={()=>onSort('name')}>NAME<span className="tab_sortmark">{sort.key==='name' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>
               <th id="tab_cat" onClick={()=>onSort('category')}>CATEGORY<span className="tab_sortmark">{sort.key==='category' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>
+              <th id="tab_name" onClick={()=>onSort('name')}>NAME<span className="tab_sortmark">{sort.key==='name' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>
             {user ? (<th id="tab_fav" onClick={()=>onSort('fav')}>FAVORITE<span className="tab_sortmark">{sort.key==='fav' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>) : (<th id="tab_star" style={{color:"gray"}}>FAVORITE (need login)</th>)}
             </tr>
           </thead>
