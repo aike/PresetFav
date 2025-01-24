@@ -51,24 +51,33 @@
   text-align: right;
 }
 
-#tab_cath {
+#tab_id {
   width: 170px;
   color: #eee;
 }
 
-#tab_keyh {
+#tab_name {
   width: 210px;
   color: #eee;
 }
 
-#tab_cmdh {
+#tab_cat {
   width: 300px;
   color: #eee;
 }
-#tab_star {
+
+#tab_fav {
   width: 300px;
   color: #eee;
 }
+
+.tab_sortmark {
+  font-size: 9px;
+  color: #aaa;
+  margin-left: 5px;
+  vertical-align: 1px;
+}
+
 
 .number {
   color: #8f8;

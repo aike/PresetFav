@@ -7,6 +7,9 @@ import './App.css';
 function App() {
   const sortFnA = (a, b, key) => a[key].localeCompare(b[key]);
   const sortFnD = (a, b, key) => b[key].localeCompare(a[key]);
+  const getFav = (id) => userRatings[id] ? userRatings[id].rating : 0;
+  const sortFnFavA = (a, b, key) => getFav(a[key]) - getFav(b[key]);
+  const sortFnFavD = (a, b, key) => getFav(b[key]) - getFav(a[key]);
 
   const [user, setUser] = useState(null);
   const [userRatings, setUserRatings] = useState({});
@@ -16,14 +19,21 @@ function App() {
   const [filteredList, setFilteredList] = useState(PRESETS);
   const [sort, setSort] = useState({ key: 'id', dir: 'asc' });
 
-  const onSort = (key) => {
-    let dir = 'asc';
-    if (key === sort.key) {
-      dir = (sort.dir === 'asc') ? 'dsc' : 'asc';
-    }
+  const sortList = (key, list) => {
+    const dir = (key === sort.key) ? (sort.dir === 'asc' ? 'dsc' : 'asc') : 'asc';
     setSort({ key: key, dir: dir });
-    let sortFn = dir === 'asc' ? sortFnA : sortFnD;
-    setFilteredList(filteredList.sort((a, b) => sortFn(a, b, key)));
+    if (key === 'fav') {
+      let sortFn = (dir === 'asc') ? sortFnFavA : sortFnFavD;
+      return list.sort((a, b) => sortFn(a, b, 'id'));  
+    } else {
+      let sortFn = (dir === 'asc') ? sortFnA : sortFnD;
+      return list.sort((a, b) => sortFn(a, b, key));  
+    }
+  }
+
+  const onSort = (key) => {
+    let sortedList = sortList(key, filteredList);
+    setFilteredList(sortedList);
   };
 
   useEffect(() => {
@@ -57,7 +67,7 @@ function App() {
 
     // 検索フォームが空欄の場合、絞り込みを解除
     if (keyword === "") {
-      setFilteredList(PRESETS.sort((a, b) => sortFn(a, b, sort.key)));
+      setFilteredList(sortList(sort.key, PRESETS));
       return ret;
     }
 
@@ -74,30 +84,28 @@ function App() {
     
     //トリム後の検索文字列が0文字の場合
     if (searchKeyword === null) {
-      setFilteredList(PRESETS.sort((a, b) => sortFn(a, b, sort.key)));
+      setFilteredList(sortList(sort.key, PRESETS));
       return ret;
     }
 
     // 絞り込みとソート
-    const result = PRESETS.filter((preset) =>
-      (preset.name.toLowerCase().indexOf(searchKeyword) !== -1)
-    ).sort((a, b) => sortFn(a, b, sort.key));
+    const result = sortList(sort.key, PRESETS.filter((preset) =>
+         (preset.name.toLowerCase().indexOf(searchKeyword) !== -1)
+      || (preset.category.toLowerCase().indexOf(searchKeyword) !== -1)));
     setFilteredList(result.length ? result : [["No Item Found"]]);
 
     return ret;
   }, [keyword]);
 
-  const handleRatingChange = async (presetId, newRating) => {
+  const onRatingChange = async (presetId, newRating) => {
     if (!user) return;
     // Firebaseに保存
     await setRating(user.uid, presetId, newRating);
   };
 
   const ListItems = (props) => {
-    const ratingData = userRatings[props.id] || {};
-    const currentRating = ratingData.rating || 0;  // デフォルト0
     return (
-      <tr key={props.id}><td className="number">{props.number}</td><td className="name">{props.name}</td><td className="cat">{props.category}</td>
+      <tr><td className="number">{props.number}</td><td className="name">{props.name}</td><td className="cat">{props.category}</td>
       <td>
       {
         [1,2,3,4,5].map(star => (
@@ -105,10 +113,10 @@ function App() {
           key={star}
           style={{ 
             cursor: user ? 'pointer' : 'default',
-            color: user ? (star <= currentRating ? '#f0f0a0' : '#606060') : '#0000',
+            color: user ? (star <= getFav(props.id) ? '#f0f0a0' : '#606060') : '#0000',
             fontSize: '1.0rem'
           }}
-          onClick={() => user && handleRatingChange(props.id, star)}
+          onClick={() => user && onRatingChange(props.id, star)}
         >
           ★
         </span>
@@ -146,15 +154,15 @@ function App() {
         <table className="datatable">
           <thead>
             <tr>
-              <th id="tab_cath" onClick={()=>onSort('id')}>NUMBER {sort.key==='id' ? sort.dir==='asc' ? '▲' : '▼' : ''}</th>
-              <th id="tab_keyh" onClick={()=>onSort('name')}>NAME {sort.key==='name' ? sort.dir==='asc' ? '▲' : '▼' : ''}</th>
-              <th id="tab_cmdh" onClick={()=>onSort('category')}>CATEGORY {sort.key==='category' ? sort.dir==='asc' ? '▲' : '▼' : ''}</th>
-            {user ? (<th id="tab_star">FAVORITE</th>) : (<th id="tab_star" style={{color:"gray"}}>FAVORITE (need login)</th>)}
+              <th id="tab_id" onClick={()=>onSort('id')}>NUMBER<span className="tab_sortmark">{sort.key==='id' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>
+              <th id="tab_name" onClick={()=>onSort('name')}>NAME<span className="tab_sortmark">{sort.key==='name' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>
+              <th id="tab_cat" onClick={()=>onSort('category')}>CATEGORY<span className="tab_sortmark">{sort.key==='category' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>
+            {user ? (<th id="tab_fav" onClick={()=>onSort('fav')}>FAVORITE<span className="tab_sortmark">{sort.key==='fav' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>) : (<th id="tab_star" style={{color:"gray"}}>FAVORITE (need login)</th>)}
             </tr>
           </thead>
           <tbody>
             {showList &&
-            filteredList.map((preset) => <ListItems id={preset.id} number={preset.number} name={preset.name} category={preset.category} />)}
+            filteredList.map((preset) => <ListItems key={preset.id} id={preset.id} number={preset.number} name={preset.name} category={preset.category} />)}
           </tbody>
         </table>
       </div>
