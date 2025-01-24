@@ -296,6 +296,7 @@ h2 {
     padding-left: 30px;
     border-bottom: solid 1px var(--dt-border-color);
     background-color: var(--dt-header-color);
+    cursor: pointer;
   }
   
   .datatable-container .datatable td {

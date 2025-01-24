@@ -1,18 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { auth, signInWithGoogle, signInWithX, logout, setRating, subscribeUserRatings } from './firebase';
+import { auth, signInWithX, logout, setRating, subscribeUserRatings } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { PRESETS } from './presets';
 import './App.css';
 
 function App() {
-  const [user, setUser] = useState(null);
-  // ユーザーが付けたレーティングを格納するオブジェクト。 { presetId: { rating: number, updatedAt: ... }, ...}
-  const [userRatings, setUserRatings] = useState({});
+  const sortFnA = (a, b, key) => a[key].localeCompare(b[key]);
+  const sortFnD = (a, b, key) => b[key].localeCompare(a[key]);
 
+  const [user, setUser] = useState(null);
+  const [userRatings, setUserRatings] = useState({});
   const inputRef = React.useRef();
   const [keyword, setKeyword] = useState("");
   const [showList, setShowList] = useState(false);
   const [filteredList, setFilteredList] = useState(PRESETS);
+  const [sort, setSort] = useState({ key: 'id', dir: 'asc' });
+
+  const onSort = (key) => {
+    let dir = 'asc';
+    if (key === sort.key) {
+      dir = (sort.dir === 'asc') ? 'dsc' : 'asc';
+    }
+    setSort({ key: key, dir: dir });
+    let sortFn = dir === 'asc' ? sortFnA : sortFnD;
+    setFilteredList(filteredList.sort((a, b) => sortFn(a, b, key)));
+  };
 
   useEffect(() => {
     // Auth状態を監視
@@ -40,9 +52,12 @@ function App() {
       setShowList(true);
     }
 
+    // 以降は絞り込み処理
+    let sortFn = sort.dir === 'asc' ? sortFnA : sortFnD;
+
     // 検索フォームが空欄の場合、絞り込みを解除
     if (keyword === "") {
-      setFilteredList(PRESETS);
+      setFilteredList(PRESETS.sort((a, b) => sortFn(a, b, sort.key)));
       return ret;
     }
 
@@ -59,13 +74,14 @@ function App() {
     
     //トリム後の検索文字列が0文字の場合
     if (searchKeyword === null) {
-      setFilteredList(PRESETS);
+      setFilteredList(PRESETS.sort((a, b) => sortFn(a, b, sort.key)));
       return ret;
     }
 
+    // 絞り込みとソート
     const result = PRESETS.filter((preset) =>
       (preset.name.toLowerCase().indexOf(searchKeyword) !== -1)
-    );
+    ).sort((a, b) => sortFn(a, b, sort.key));
     setFilteredList(result.length ? result : [["No Item Found"]]);
 
     return ret;
@@ -129,7 +145,10 @@ function App() {
         </div>
         <table className="datatable">
           <thead>
-            <tr><th id="tab_cath">NUMBER</th><th id="tab_keyh">NAME</th><th id="tab_cmdh">CATEGORY</th>
+            <tr>
+              <th id="tab_cath" onClick={()=>onSort('id')}>NUMBER {sort.key==='id' ? sort.dir==='asc' ? '▲' : '▼' : ''}</th>
+              <th id="tab_keyh" onClick={()=>onSort('name')}>NAME {sort.key==='name' ? sort.dir==='asc' ? '▲' : '▼' : ''}</th>
+              <th id="tab_cmdh" onClick={()=>onSort('category')}>CATEGORY {sort.key==='category' ? sort.dir==='asc' ? '▲' : '▼' : ''}</th>
             {user ? (<th id="tab_star">FAVORITE</th>) : (<th id="tab_star" style={{color:"gray"}}>FAVORITE (need login)</th>)}
             </tr>
           </thead>
