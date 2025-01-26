@@ -96,7 +96,7 @@ function App() {
     // 絞り込みとソート
     const result = sortList(sort.key, sort.dir, preset[selectedList].filter((preset) =>
          (preset.name.toLowerCase().indexOf(searchKeyword) !== -1)
-      || (preset.category.toLowerCase().indexOf(searchKeyword) !== -1)));
+      || (preset.cat.toLowerCase().indexOf(searchKeyword) !== -1)));
     setFilteredList(result.length ? result : [["No Item Found"]]);
 
     return ret;
@@ -110,7 +110,7 @@ function App() {
 
   const ListItems = (props) => {
     return (
-      <tr><td className="number">{props.number}</td><td className="cat">{props.category}</td><td className="name">{props.name}</td>
+      <tr><td className="number">{props.num}</td><td className="cat">{props.cat}</td><td className="name">{props.name}</td>
       <td className="fav">
       {
         <span
@@ -180,14 +180,14 @@ function App() {
           <thead>
             <tr>
               <th id="tab_id" onClick={()=>onSort('id')}>NUMBER<span className="tab_sortmark">{sort.key==='id' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>
-              <th id="tab_cat" onClick={()=>onSort('category')}>CATEGORY<span className="tab_sortmark">{sort.key==='category' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>
+              <th id="tab_cat" onClick={()=>onSort('category')}>CATEGORY<span className="tab_sortmark">{sort.key==='cat' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>
               <th id="tab_name" onClick={()=>onSort('name')}>NAME<span className="tab_sortmark">{sort.key==='name' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>
             {user ? (<th id="tab_fav" onClick={()=>onSort('fav')}>FAVORITE<span className="tab_sortmark">{sort.key==='fav' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>) : (<th id="tab_fav" style={{color:"gray"}}>FAVORITE (need login)</th>)}
             </tr>
           </thead>
           <tbody>
             {showList &&
-            filteredList.map((preset) => <ListItems key={preset.id} id={preset.id} number={preset.number} name={preset.name} category={preset.category} />)}
+            filteredList.map((preset) => <ListItems key={preset.id} id={preset.id} num={preset.num} name={preset.name} cat={preset.cat} />)}
           </tbody>
         </table>
       </div>
