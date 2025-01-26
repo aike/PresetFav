@@ -77,24 +77,28 @@
 }
 
 #tab_id {
-  width: 170px;
+  width: 100px;
   color: #eee;
-}
-
-#tab_name {
-  width: 210px;
-  color: #eee;
+  user-select: none;
 }
 
 #tab_cat {
+  width: 150px;
+  color: #eee;
+  user-select: none;
+}
+
+#tab_name {
   width: 300px;
   color: #eee;
+  user-select: none;
 }
 
 #tab_fav {
   width: 300px;
   color: #eee;
   padding-left: 40px;
+  user-select: none;
 }
 
 .tab_sortmark {
@@ -102,6 +106,7 @@
   color: #aaa;
   margin-left: 5px;
   vertical-align: 1px;
+  user-select: none;
 }
 
 

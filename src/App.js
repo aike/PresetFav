@@ -24,8 +24,7 @@ function App() {
   const [selectedList, setSelectedList] = useState('Tone');
   const [sort, setSort] = useState({ key: 'id', dir: 'asc' });
 
-  const sortList = (key, list) => {
-    const dir = (key === sort.key) ? (sort.dir === 'asc' ? 'dsc' : 'asc') : 'asc';
+  const sortList = (key, dir, list) => {
     setSort({ key: key, dir: dir });
     if (key === 'fav') {
       let sortFn = (dir === 'asc') ? sortFnFavA : sortFnFavD;
@@ -37,7 +36,8 @@ function App() {
   }
 
   const onSort = (key) => {
-    let sortedList = sortList(key, filteredList);
+    const dir = (key === sort.key) ? (sort.dir === 'asc' ? 'dsc' : 'asc') : 'asc';
+    let sortedList = sortList(key, dir, filteredList);
     setFilteredList(sortedList);
   };
 
@@ -72,7 +72,7 @@ function App() {
 
     // 検索フォームが空欄の場合、絞り込みを解除
     if (keyword === "") {
-      setFilteredList(sortList(sort.key, preset[selectedList]));
+      setFilteredList(sortList(sort.key, sort.dir, preset[selectedList]));
       return ret;
     }
 
@@ -89,12 +89,12 @@ function App() {
     
     //トリム後の検索文字列が0文字の場合
     if (searchKeyword === null) {
-      setFilteredList(sortList(sort.key, preset[selectedList]));
+      setFilteredList(sortList(sort.key, sort.dir, preset[selectedList]));
       return ret;
     }
 
     // 絞り込みとソート
-    const result = sortList(sort.key, preset[selectedList].filter((preset) =>
+    const result = sortList(sort.key, sort.dir, preset[selectedList].filter((preset) =>
          (preset.name.toLowerCase().indexOf(searchKeyword) !== -1)
       || (preset.category.toLowerCase().indexOf(searchKeyword) !== -1)));
     setFilteredList(result.length ? result : [["No Item Found"]]);
