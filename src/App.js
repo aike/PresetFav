@@ -4,7 +4,7 @@ import '@szhsin/react-menu/dist/index.css';
 import "@szhsin/react-menu/dist/theme-dark.css";
 import { auth, signInWithX, logout, setRating, subscribeUserRatings } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { presetTitle, preset, presetNames } from './presets';
+import { presetTitle, preset, presetNames } from './presets.js';
 import './App.css';
 
 function App() {
