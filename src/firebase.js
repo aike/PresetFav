@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, GoogleAuthProvider, TwitterAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
-import { getFirestore, doc, setDoc, collection, onSnapshot } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, deleteDoc, collection, onSnapshot } from 'firebase/firestore';
 import { firebaseConfig } from './firebaseConfig';
 
 const app = initializeApp(firebaseConfig);
@@ -28,16 +28,20 @@ export const logout = async () => {
 
 // レーティング保存
 export const setRating = async (uid, presetId, rating) => {
-  const ref = doc(db, 'userRatings', uid, 'ratings', presetId);
-  await setDoc(ref, {
-    rating: rating,
-    updatedAt: new Date()
-  }, { merge: true });
+  const ref = doc(db, 'fav', uid, 'favs', presetId);
+  if (rating === 0) {
+    await deleteDoc(ref);
+    return;
+  } else {
+    await setDoc(ref, {
+      rating: rating
+    }, { merge: true });
+  }
 };
 
 // リスナー (ユーザーのレーティング全件を取得)
 export const subscribeUserRatings = (uid, callback) => {
-  const ratingsRef = collection(db, 'userRatings', uid, 'ratings');
+  const ratingsRef = collection(db, 'fav', uid, 'favs');
   return onSnapshot(ratingsRef, (snapshot) => {
     const data = {};
     snapshot.forEach(doc => {

@@ -101,9 +101,9 @@
 }
 
 #tab_fav {
-  width: 300px;
+  width: 200px;
   color: #eee;
-  padding-left: 40px;
+  padding-left: 22px;
   user-select: none;
 }
 
@@ -127,6 +127,10 @@
 
 .datatable-container .datatable .cat {
   color: #8ff;
+}
+
+.datatable-container .datatable .fav {
+  padding-left: 0px;
 }
 
 .usericon {

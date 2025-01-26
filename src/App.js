@@ -111,7 +111,20 @@ function App() {
   const ListItems = (props) => {
     return (
       <tr><td className="number">{props.number}</td><td className="cat">{props.category}</td><td className="name">{props.name}</td>
-      <td>
+      <td className="fav">
+      {
+        <span
+          style={{
+            cursor: user ? 'pointer' : 'default',
+            color: '#0000',
+            fontSize: '0.8rem',
+            marginRight: '0px',
+          }}
+          onClick={() => user && onRatingChange(props.id, 0)}
+        >
+        ×
+        </span>
+      }
       {
         [1,2,3,4,5].map(star => (
         <span
@@ -169,7 +182,7 @@ function App() {
               <th id="tab_id" onClick={()=>onSort('id')}>NUMBER<span className="tab_sortmark">{sort.key==='id' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>
               <th id="tab_cat" onClick={()=>onSort('category')}>CATEGORY<span className="tab_sortmark">{sort.key==='category' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>
               <th id="tab_name" onClick={()=>onSort('name')}>NAME<span className="tab_sortmark">{sort.key==='name' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>
-            {user ? (<th id="tab_fav" onClick={()=>onSort('fav')}>FAVORITE<span className="tab_sortmark">{sort.key==='fav' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>) : (<th id="tab_star" style={{color:"gray"}}>FAVORITE (need login)</th>)}
+            {user ? (<th id="tab_fav" onClick={()=>onSort('fav')}>FAVORITE<span className="tab_sortmark">{sort.key==='fav' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>) : (<th id="tab_fav" style={{color:"gray"}}>FAVORITE (need login)</th>)}
             </tr>
           </thead>
           <tbody>
