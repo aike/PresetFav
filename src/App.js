@@ -4,7 +4,7 @@ import '@szhsin/react-menu/dist/index.css';
 import "@szhsin/react-menu/dist/theme-dark.css";
 import { auth, signInWithX, logout, setRating, subscribeUserRatings } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { PRESETS } from './presets';
+import { presetTitle, preset, presetNames } from './presets';
 import './App.css';
 
 function App() {
@@ -14,12 +14,14 @@ function App() {
   const sortFnFavA = (a, b, key) => getFav(a[key]) - getFav(b[key]);
   const sortFnFavD = (a, b, key) => getFav(b[key]) - getFav(a[key]);
 
+//  const [PRESETS, setPresets] = useState(PRESETS3);
   const [user, setUser] = useState(null);
   const [userRatings, setUserRatings] = useState({});
   const inputRef = React.useRef();
   const [keyword, setKeyword] = useState("");
   const [showList, setShowList] = useState(false);
-  const [filteredList, setFilteredList] = useState(PRESETS);
+  const [filteredList, setFilteredList] = useState(preset['Tone']);
+  const [selectedList, setSelectedList] = useState('Tone');
   const [sort, setSort] = useState({ key: 'id', dir: 'asc' });
 
   const sortList = (key, list) => {
@@ -70,7 +72,7 @@ function App() {
 
     // 検索フォームが空欄の場合、絞り込みを解除
     if (keyword === "") {
-      setFilteredList(sortList(sort.key, PRESETS));
+      setFilteredList(sortList(sort.key, preset[selectedList]));
       return ret;
     }
 
@@ -87,12 +89,12 @@ function App() {
     
     //トリム後の検索文字列が0文字の場合
     if (searchKeyword === null) {
-      setFilteredList(sortList(sort.key, PRESETS));
+      setFilteredList(sortList(sort.key, preset[selectedList]));
       return ret;
     }
 
     // 絞り込みとソート
-    const result = sortList(sort.key, PRESETS.filter((preset) =>
+    const result = sortList(sort.key, preset[selectedList].filter((preset) =>
          (preset.name.toLowerCase().indexOf(searchKeyword) !== -1)
       || (preset.category.toLowerCase().indexOf(searchKeyword) !== -1)));
     setFilteredList(result.length ? result : [["No Item Found"]]);
@@ -139,8 +141,11 @@ function App() {
               onClick={() => setShowList(true)}
             />
           </div>
-          <div id="app_title">Preset Fav [MC-101] 
-            <span id="subtitle">Easy Search Tool</span>
+          <div id="app_title">Preset Fav [{presetTitle}] 
+            <span id="subtitle">sound list easy search tool</span>
+          </div>
+          <div id="about"> 
+            <a href="https://github.com/aike/PresetFav">about</a>
           </div>
           {user ? (
             <div id="userarea">
