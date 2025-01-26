@@ -7,7 +7,7 @@ A simple web app to rate your favorite synthesizer presets.
 ## Features
 - Display a list of synth presets
 - Rate each preset from 0 to 5 stars
-- Store ratings with X account
+- Store ratings with X account login
 - Filter presets by keyword
 - Now supports 1 synth: MC-101
 
