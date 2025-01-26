@@ -141,7 +141,8 @@ function App() {
               onClick={() => setShowList(true)}
             />
           </div>
-          <div id="app_title">Preset Fav [{presetTitle}] 
+          <div id="app_title">Preset Fav 
+            <span id="insttitle">[{presetTitle}]</span> 
             <span id="subtitle">sound list easy search tool</span>
           </div>
           <div id="about"> 
