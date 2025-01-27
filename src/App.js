@@ -102,6 +102,11 @@ function App() {
     return ret;
   }, [keyword]);
 
+  const onListChange = (list) => {
+    setSelectedList(list); 
+    setFilteredList(sortList(sort.key, sort.dir, preset[list]));   
+  }
+
   const onRatingChange = async (presetId, newRating) => {
     if (!user) return;
     // Firebaseに保存
@@ -146,6 +151,7 @@ function App() {
   return (
     <div className='App'>
       <div className="datatable-container">
+
         <div className="header-tools">
           <div className="search">
             <input type="search" className="search-input" placeholder="Search..."
@@ -171,11 +177,28 @@ function App() {
           ) : (
             <div id="userarea">
               <span className="loginout" onClick={signInWithX}>Login</span>
-            </div>
-          
+            </div>          
           )}
-
         </div>
+
+        <div id="select-list-area">
+          <div
+            className={ selectedList === 'Tone' ? 'list-sel-button' : 'list-unsel-button' }
+            onClick={() => onListChange('Tone')}>
+              Tone
+          </div>
+          <div
+            className={ selectedList === 'Dr.Kit' ? 'list-sel-button' : 'list-unsel-button' }
+            onClick={() => onListChange('Dr.Kit')}>
+              Dr.Kit
+          </div>
+          <div
+            className={ selectedList === 'Dr.Inst' ? 'list-sel-button' : 'list-unsel-button' }
+            onClick={() => onListChange('Dr.Inst')}>
+              Dr.Inst
+          </div>
+        </div>
+
         <table className="datatable">
           <thead>
             <tr>

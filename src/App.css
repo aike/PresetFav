@@ -82,6 +82,37 @@
   width: 78px;
 }
 
+#select-list-area {
+  display: flex;
+  gap: 10px;
+  padding: 5px 30px;
+  background-color: var(--dt-header-color);
+  border-bottom: solid 1px var(--dt-border-color);
+}
+
+#select-list-area div {
+  font-size: 10px;
+  width: 60px;
+  height: 20px;
+  margin: 5px 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+}
+
+#select-list-area .list-sel-button {
+  background-color: #667;
+  color: #ddd;
+}
+
+#select-list-area .list-unsel-button {
+  background-color: #484858;
+  color: #888;
+}
+
+
 #tab_id {
   width: 60px;
   color: #eee;
