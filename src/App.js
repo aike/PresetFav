@@ -89,6 +89,40 @@ function App() {
   }, [keyword]);
 
 
+  const createTsvData = (listname) => {
+    let s = "";
+    const matchedPresets = preset[listname].filter((item) => userRatings[item.id] !== undefined);
+    matchedPresets.forEach((item) => {
+      const fav = userRatings[item.id].rating;
+      s += `${listname}\t${item.num}\t${item.cat}\t${item.name}\t${fav}\n`;
+    });
+    return s;
+  };
+
+
+  const exportData = () => {
+
+    let tsv = 'list\tnumber\tcategory\tname\tfavorite\n';
+    for (let listname of presetNames) {
+      tsv += createTsvData(listname);
+    }
+    const data = JSON.stringify(userRatings);
+    const blob = new Blob([tsv], { type: 'text/tsv' });
+    const url = URL.createObjectURL(blob);
+
+    const container = document.getElementById('dlcontainer');
+    let link = container.querySelector('a');
+    if (!link) {
+      link = document.createElement('a');
+      container.appendChild(link);
+    }
+    link.href = url;
+    link.download = 'export.tsv';
+    link.style.display = 'none';
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
   const onSelButton = (list) => {
     setSelectedList(list); 
     setFilteredList(filterList(preset[list], keyword));
@@ -162,7 +196,7 @@ function App() {
           {user ? (
             <div id="userarea">
               <Menu theming="dark" menuButton={<img className="usericon" src={user.photoURL} alt="user" title={user.displayName} />} transition>
-                <MenuItem>Export</MenuItem>
+                <MenuItem onClick={exportData}>Export</MenuItem>
                 <MenuItem onClick={logout}>Log Out</MenuItem>
               </Menu>  
               </div>
@@ -171,6 +205,7 @@ function App() {
               <span className="login" onClick={signInWithX}>Login</span>
             </div>          
           )}
+          <div id="dlcontainer"></div>
         </div>
 
         { presetNames.length > 1 ? (
