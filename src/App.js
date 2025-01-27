@@ -23,6 +23,7 @@ function App() {
   const [selectedList, setSelectedList] = useState('Tone');
   const [sort, setSort] = useState({ key: 'id', dir: 'asc' });
 
+  // ソート関数
   const sortList = (key, dir, list) => {
     setSort({ key: key, dir: dir });
     if (key === 'fav') {
@@ -38,6 +39,24 @@ function App() {
     const dir = (key === sort.key) ? (sort.dir === 'asc' ? 'dsc' : 'asc') : 'asc';
     let sortedList = sortList(key, dir, filteredList);
     setFilteredList(sortedList);
+  };
+
+  // ソート＆絞り込み関数
+  const filterList = (list, keyword) => {
+    const s = keyword.trim().toLowerCase();
+
+    if (s.length === 0) {
+      //トリム後の検索文字列が0文字の場合、フィルターなし
+      return sortList(sort.key, sort.dir, list);
+    } else if (s.length === 1) {
+      //トリム後の検索文字列が1文字の場合、絞り込みに時間がかかるのを回避するため０件表示
+      return [];
+    }
+
+    return sortList(sort.key, sort.dir, list.filter((item) =>
+      (item.name.toLowerCase().indexOf(s) !== -1)
+      || (item.cat.toLowerCase().indexOf(s) !== -1)
+    ));
   };
 
   useEffect(() => {
@@ -66,9 +85,12 @@ function App() {
       setShowList(true);
     }
 
-    // 以降は絞り込み処理
-    let sortFn = sort.dir === 'asc' ? sortFnA : sortFnD;
+    setFilteredList(filterList(preset[selectedList], keyword));
 
+    // 以降は絞り込み処理
+    //let sortFn = sort.dir === 'asc' ? sortFnA : sortFnD;
+
+    /*
     // 検索フォームが空欄の場合、絞り込みを解除
     if (keyword === "") {
       setFilteredList(sortList(sort.key, sort.dir, preset[selectedList]));
@@ -97,6 +119,7 @@ function App() {
          (preset.name.toLowerCase().indexOf(searchKeyword) !== -1)
       || (preset.cat.toLowerCase().indexOf(searchKeyword) !== -1)));
     setFilteredList(result.length ? result : [["No Item Found"]]);
+    */
 
     return ret;
   }, [keyword]);
@@ -104,7 +127,7 @@ function App() {
 
   const onSelButton = (list) => {
     setSelectedList(list); 
-    setFilteredList(sortList(sort.key, sort.dir, preset[list]));   
+    setFilteredList(filterList(preset[list], keyword));
   };
 
   const SelButton = (props) => {
