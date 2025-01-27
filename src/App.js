@@ -77,51 +77,15 @@ function App() {
       }
     });
 
-    const ret = () => unsubAuth();
-
     if (inputRef.current) {
       const node = inputRef.current;
       node.focus();
       setShowList(true);
     }
-
     setFilteredList(filterList(preset[selectedList], keyword));
 
-    // 以降は絞り込み処理
-    //let sortFn = sort.dir === 'asc' ? sortFnA : sortFnD;
+    return () => unsubAuth();
 
-    /*
-    // 検索フォームが空欄の場合、絞り込みを解除
-    if (keyword === "") {
-      setFilteredList(sortList(sort.key, sort.dir, preset[selectedList]));
-      return ret;
-    }
-
-    // 検索文字列をトリム、小文字変換
-    const searchKeyword = keyword
-      .trim()
-      .toLowerCase();
-
-    //トリム後の検索文字列が1文字の場合、絞り込みに時間がかかるのを回避するため０件表示
-    if (searchKeyword.length === 1) {
-      setFilteredList([]);
-      return ret;
-    }
-    
-    //トリム後の検索文字列が0文字の場合
-    if (searchKeyword === null) {
-      setFilteredList(sortList(sort.key, sort.dir, preset[selectedList]));
-      return ret;
-    }
-
-    // 絞り込みとソート
-    const result = sortList(sort.key, sort.dir, preset[selectedList].filter((preset) =>
-         (preset.name.toLowerCase().indexOf(searchKeyword) !== -1)
-      || (preset.cat.toLowerCase().indexOf(searchKeyword) !== -1)));
-    setFilteredList(result.length ? result : [["No Item Found"]]);
-    */
-
-    return ret;
   }, [keyword]);
 
 
@@ -151,12 +115,8 @@ function App() {
       <td className="fav">
       {
         <span
-          style={{
-            cursor: user ? 'pointer' : 'default',
-            color: '#0000',
-            fontSize: '0.8rem',
-            marginRight: '0px',
-          }}
+          className="star-del"
+          style={{ cursor: user ? 'pointer' : 'default' }}
           onClick={() => user && onRatingChange(props.id, 0)}
         >
         ×
@@ -166,10 +126,10 @@ function App() {
         [1,2,3,4,5].map(star => (
         <span
           key={star}
+          className="star"
           style={{ 
             cursor: user ? 'pointer' : 'default',
-            color: user ? (star <= getFav(props.id) ? '#f0f0a0' : '#606060') : '#0000',
-            fontSize: '1.0rem'
+            color: user ? (star <= getFav(props.id) ? '#f0f0a0' : '#606060') : '#0000'
           }}
           onClick={() => user && onRatingChange(props.id, star)}
         >
@@ -208,7 +168,7 @@ function App() {
               </div>
           ) : (
             <div id="userarea">
-              <span className="loginout" onClick={signInWithX}>Login</span>
+              <span className="login" onClick={signInWithX}>Login</span>
             </div>          
           )}
         </div>

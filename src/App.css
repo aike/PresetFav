@@ -66,6 +66,21 @@
   text-align: right;
 }
 
+.usericon {
+  border-radius:50%;
+  border: solid 1.2px #888;
+  width: 24px;
+  height: 24px;
+  vertical-align:middle;
+}
+
+.login {
+  color: #ccc;
+  font-size: 10px;
+  font-weight: bold;
+  margin-left: 15px;
+  cursor: pointer;
+}
 
 .szh-menu-container--theme-dark .szh-menu {
   color: #cad1d8;
@@ -134,7 +149,7 @@
 #tab_fav {
   width: 200px;
   color: #eee;
-  padding-left: 22px;
+  padding-left: 17px;
   user-select: none;
 }
 
@@ -164,21 +179,16 @@
   padding-left: 0px;
 }
 
-.usericon {
-  border-radius:50%;
-  border: solid 1.2px #888;
-  width: 24px;
-  height: 24px;
-  vertical-align:middle;
+.star-del {
+  color: #0000;
+  font-size: 0.8rem;
+  margin-right: 0px;
 }
 
-.loginout {
-  color: #ccc;
-  font-size: 10px;
-  font-weight: bold;
-  margin-left: 15px;
-  cursor: pointer;
+.star {
+  font-size: 1.0rem;
 }
+
 
 body {
   font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
