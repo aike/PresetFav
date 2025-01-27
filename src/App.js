@@ -14,7 +14,6 @@ function App() {
   const sortFnFavA = (a, b, key) => getFav(a[key]) - getFav(b[key]);
   const sortFnFavD = (a, b, key) => getFav(b[key]) - getFav(a[key]);
 
-//  const [PRESETS, setPresets] = useState(PRESETS3);
   const [user, setUser] = useState(null);
   const [userRatings, setUserRatings] = useState({});
   const inputRef = React.useRef();
@@ -102,10 +101,20 @@ function App() {
     return ret;
   }, [keyword]);
 
-  const onListChange = (list) => {
+
+  const onSelButton = (list) => {
     setSelectedList(list); 
     setFilteredList(sortList(sort.key, sort.dir, preset[list]));   
-  }
+  };
+
+  const SelButton = (props) => {
+    return (
+      <div
+      className={ selectedList === props.name ? 'list-sel-button' : 'list-unsel-button' }
+      onClick={() => onSelButton(props.name)}>
+        {props.name}
+    </div>
+  )};
 
   const onRatingChange = async (presetId, newRating) => {
     if (!user) return;
@@ -181,23 +190,11 @@ function App() {
           )}
         </div>
 
-        <div id="select-list-area">
-          <div
-            className={ selectedList === 'Tone' ? 'list-sel-button' : 'list-unsel-button' }
-            onClick={() => onListChange('Tone')}>
-              Tone
+        { presetNames.length > 1 ? (
+          <div id="select-list-area">
+            { presetNames.map((presetname) => <SelButton name={presetname} />) }
           </div>
-          <div
-            className={ selectedList === 'Dr.Kit' ? 'list-sel-button' : 'list-unsel-button' }
-            onClick={() => onListChange('Dr.Kit')}>
-              Dr.Kit
-          </div>
-          <div
-            className={ selectedList === 'Dr.Inst' ? 'list-sel-button' : 'list-unsel-button' }
-            onClick={() => onListChange('Dr.Inst')}>
-              Dr.Inst
-          </div>
-        </div>
+        ) : null }
 
         <table className="datatable">
           <thead>
