@@ -4,8 +4,9 @@ import '@szhsin/react-menu/dist/index.css';
 import "@szhsin/react-menu/dist/theme-dark.css";
 import { auth, signInWithX, logout, setRating, subscribeUserRatings } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-import { presetTitle, preset, presetNames } from './presets.js';
 import './App.css';
+
+let presetLoaded = false;
 
 function App() {
   const sortFnA = (a, b, key) => a[key].localeCompare(b[key]);
@@ -19,13 +20,18 @@ function App() {
   const inputRef = React.useRef();
   const [keyword, setKeyword] = useState("");
   const [showList, setShowList] = useState(false);
-  const [filteredList, setFilteredList] = useState(preset[presetNames[0]]);
-  const [selectedList, setSelectedList] = useState(presetNames[0]);
+  const [presetTitle, setPresetTitle] = useState("");
+  const [presetNames, setPresetNames] = useState("");
+  const [preset, setPreset] = useState({"" : []});
+  const [selectedList, setSelectedList] = useState("");
+  const [filteredList, setFilteredList] = useState([]);
   const [sort, setSort] = useState({ key: 'id', dir: 'asc' });
 
   // ソート関数
   const sortList = (key, dir, list) => {
     setSort({ key: key, dir: dir });
+    if (list === undefined) return [];
+    if (list.length === 0) return [];
     if (key === 'fav') {
       let sortFn = (dir === 'asc') ? sortFnFavA : sortFnFavD;
       return list.sort((a, b) => sortFn(a, b, 'id'));  
@@ -60,6 +66,26 @@ function App() {
   };
 
   useEffect(() => {
+    // プリセットデータを読み込む
+    if (!presetLoaded) {
+      presetLoaded = true;
+      const script = document.createElement('script');
+      script.src = './presets.js';
+      script.id = 'presetdata';
+      //script.async = true;
+      script.onload = () => {
+        setPresetTitle(window.ptitle);
+        setPresetNames(window.pnames);
+        setPreset(window.pdata);
+        setSelectedList(window.pnames[0]);
+        setFilteredList(window.pdata[window.pnames[0]]);
+        setShowList(true);
+      };
+      if (!document.getElementById('presetdata')) {
+        document.body.appendChild(script);
+      }
+    }
+
     // Auth状態を監視
     const unsubAuth = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -228,7 +254,7 @@ function App() {
           </thead>
           <tbody>
             {showList &&
-            filteredList.map((preset) => <ListItems key={preset.id} id={preset.id} num={preset.num} name={preset.name} cat={preset.cat} />)}
+            filteredList.map((item) => <ListItems key={item.id} id={item.id} num={item.num} name={item.name} cat={item.cat} />)}
           </tbody>
         </table>
       </div>

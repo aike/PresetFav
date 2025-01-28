@@ -1,7 +1,7 @@
-export const presetTitle = 'Roland MC-101';
-export const presetNames = ['Tone', 'Dr.Kit', 'Dr.Inst'];
-export const preset = {};
-preset['Tone'] = [
+ptitle = 'Roland MC-101';
+pnames = ['Tone', 'Dr.Kit', 'Dr.Inst'];
+pdata = {};
+pdata['Tone'] = [
   {id:"aTA0001",name:"SysCtrlDeepEcho2",num:"A-001",cat:"07:Hit"},
   {id:"aTA0002",name:"Horn Blast",num:"A-002",cat:"10:Syn.Brs"},
   {id:"aTA0003",name:"Step Arabesque",num:"A-003",cat:"44:Phrase"},

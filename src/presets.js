@@ -1,7 +1,7 @@
-export const presetTitle = 'Novation MiniNova';
-export const presetNames = ['Preset'];
-export const preset = {};
-preset['Preset'] = [
+ptitle = 'Novation MiniNova';
+pnames = ['Preset'];
+pdata = {};
+pdata['Preset'] = [
   {id:"bA000",name:"BassIsWet DC",num:"A000",cat:"BASS"},
   {id:"bA001",name:"WobblyDub PM",num:"A001",cat:"BASS"},
   {id:"bA002",name:"OxyStrings DF",num:"A002",cat:"PAD/STRINGS"},
@@ -258,4 +258,4 @@ preset['Preset'] = [
   {id:"bB125",name:"SynthPopPiano",num:"B125",cat:"-"},
   {id:"bB126",name:"PinCode",num:"B126",cat:"ARP/MOVEMENT"},
   {id:"bB127",name:"CoatHanger JF",num:"B127",cat:"ARP/MOVEMENT"},
-    ];
+];
