@@ -13,7 +13,7 @@ A simple web app to rate your favorite synthesizer presets.
 - Now supports 2 synths: Roland MC-101, Novation MiniNova
 
 ## Webpage
-https://aike.github.io/presetfav/
+https://aike.github.io/PresetFav/
 
 ## Screenshot
 
