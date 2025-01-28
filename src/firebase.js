@@ -15,7 +15,7 @@ export const signInWithGoogle = async () => {
   await signInWithPopup(auth, provider);
 };
 
-// Googleログイン
+// Xログイン
 export const signInWithX = async () => {
   const provider = new TwitterAuthProvider();
   await signInWithPopup(auth, provider);
