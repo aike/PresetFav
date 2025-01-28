@@ -3604,7 +3604,7 @@ pdata['Tone'] = [
   
 ];
 
-preset['Dr.Kit'] = [
+pdata['Dr.Kit'] = [
   {id:"aKA001",name:"TR-909 3",num:"A-001",cat:"Dr.Kit"},
   {id:"aKA002",name:"TR-808 2",num:"A-002",cat:"Dr.Kit"},
   {id:"aKA003",name:"Future Bass Kit",num:"A-003",cat:"Dr.Kit"},
@@ -3739,7 +3739,7 @@ preset['Dr.Kit'] = [
   {id:"aKB074",name:"Other Perc 2 w",num:"B-074",cat:"Dr.Kit"},
   ];
 
-preset['Dr.Inst'] = [
+pdata['Dr.Inst'] = [
   {id:"aI001",name:"Off",num:"001",cat:"-"},
   {id:"aI002",name:"Jazz Kick 1",num:"002",cat:"Kick"},
   {id:"aI003",name:"Jazz Kick 2",num:"003",cat:"Kick"},
