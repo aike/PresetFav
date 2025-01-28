@@ -19,8 +19,8 @@ function App() {
   const inputRef = React.useRef();
   const [keyword, setKeyword] = useState("");
   const [showList, setShowList] = useState(false);
-  const [filteredList, setFilteredList] = useState(preset['Tone']);
-  const [selectedList, setSelectedList] = useState('Tone');
+  const [filteredList, setFilteredList] = useState(preset[presetNames[0]]);
+  const [selectedList, setSelectedList] = useState(presetNames[0]);
   const [sort, setSort] = useState({ key: 'id', dir: 'asc' });
 
   // ソート関数
@@ -187,8 +187,8 @@ function App() {
             />
           </div>
           <div id="app_title">Preset Fav 
+            <span id="subtitle">sound list tool</span>
             <span id="insttitle">[{presetTitle}]</span> 
-            <span id="subtitle">sound list easy search tool</span>
           </div>
           <div id="about"> 
             <a href="https://github.com/aike/PresetFav">about</a>
@@ -218,7 +218,7 @@ function App() {
           <thead>
             <tr>
               <th id="tab_id" onClick={()=>onSort('id')}>NUMBER<span className="tab_sortmark">{sort.key==='id' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>
-              <th id="tab_cat" onClick={()=>onSort('category')}>CATEGORY<span className="tab_sortmark">{sort.key==='cat' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>
+              <th id="tab_cat" onClick={()=>onSort('cat')}>CATEGORY<span className="tab_sortmark">{sort.key==='cat' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>
               <th id="tab_name" onClick={()=>onSort('name')}>NAME<span className="tab_sortmark">{sort.key==='name' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>
             {user ? (<th id="tab_fav" onClick={()=>onSort('fav')}>FAVORITE<span className="tab_sortmark">{sort.key==='fav' ? sort.dir==='asc' ? '▲' : '▼' : '　'}</span></th>) : (<th id="tab_fav" style={{color:"gray"}}>FAVORITE (need login)</th>)}
             </tr>

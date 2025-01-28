@@ -6,10 +6,11 @@ A simple web app to rate your favorite synthesizer presets.
 
 ## Features
 - Display a list of synth presets
-- Rate each preset from 0 to 5 stars
-- Store ratings with X account login
 - Filter presets by keyword
-- Now supports 1 synth: MC-101
+- Sort presets by number, category, name and favorite
+- Rate each preset from 0 to 5 stars with X account login
+- Export your favorite data
+- Now supports 2 synths: Roland MC-101, Novation MiniNova
 
 ## Webpage
 https://aike.github.io/presetfav/

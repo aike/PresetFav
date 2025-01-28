@@ -39,14 +39,14 @@
 
 #insttitle {
   font-size: 14px;
-  margin-left: 5px;
+  margin-left: 15px;
   font-weight: 300; 
   color: #ccf;
 }
 
 #subtitle {
   font-size: 12px;
-  margin-left: 10px;
+  margin-left: 5px;
 }
 
 #about > a {
@@ -135,7 +135,7 @@
 }
 
 #tab_cat {
-  width: 150px;
+  width: 170px;
   color: #eee;
   user-select: none;
 }
