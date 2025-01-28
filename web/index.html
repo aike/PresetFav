@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Hardware synthesizer preset easy search tool"
+    />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <title>Preset Fav</title>
+    <style type="text/css">
+      body {
+        font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        background-color: #58545c;
+        color: #ccc;
+        font-weight: 300;
+      }
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50vh;
+        background-color: #283034;
+        margin: 5% 10%;
+        border-radius: 15px;
+      }
+      h1 {
+        font-size: 4rem;
+        font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      }
+      p {
+        color: #ccc;
+        font-size: 1.5rem;
+        font-weight: 300;
+      }
+      a {
+        -webkit-transition: .3s all ease;
+        -o-transition: .3s all ease;
+        transition: .3s all ease;
+      }
+      a, a:hover {
+        text-decoration: none !important;
+        color: #ccc;
+      }
+      ul {
+        margin: 0 0 0 25px;
+        padding: 0;
+        justify-content: start;
+        align-items: baseline;
+        font-size: 2rem;
+      }
+      li {
+        margin: 0 var(--dt-padding-xs);
+        align-items: baseline;
+      }      
+    </style>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>Preset Fav</h1>
+            <p>Hardware synthesizer preset rating tool</p>
+            <ul>
+              <li><a href="mc101">Roland MC-101</a></li>
+              <li><a href="mininova">Novation MiniNova</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>  
+    </div>
+  </body>
+</html>

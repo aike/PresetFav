@@ -190,6 +190,9 @@ function App() {
             <span id="subtitle">sound list tool</span>
             <span id="insttitle">[{presetTitle}]</span> 
           </div>
+          <div id="home"> 
+            <a href="https://aike.github.io/PresetFav">home</a>
+          </div>
           <div id="about"> 
             <a href="https://github.com/aike/PresetFav">about</a>
           </div>
