@@ -27,14 +27,15 @@ export const logout = async () => {
 };
 
 // レーティング保存
-export const setRating = async (uid, presetId, rating) => {
-  const ref = doc(db, 'fav', uid, 'favs', presetId);
+export const setRating = async (listid, uid, key, rating) => {
+  const ref = doc(db, 'fav', uid, 'favs', key);
   if (rating === 0) {
     await deleteDoc(ref);
     return;
   } else {
     await setDoc(ref, {
-      rating: rating
+      rating: rating,
+      list: listid
     }, { merge: true });
   }
 };

@@ -1,7 +1,5 @@
 PresetFav
 ---
-
-## Description
 A simple web app to rate your favorite synthesizer presets.
 
 ## Features
@@ -10,7 +8,7 @@ A simple web app to rate your favorite synthesizer presets.
 - Sort presets by number, category, name and favorite
 - Rate each preset from 0 to 5 stars with X account login
 - Export your favorite data
-- Now supports 2 synths: Roland MC-101, Novation MiniNova
+- Now supports 5 synths: Roland MC-101, JD-Xi, SH-32, JD-800 and Novation MiniNova
 
 ## Webpage
 https://aike.github.io/PresetFav/

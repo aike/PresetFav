@@ -20,9 +20,12 @@ function App() {
   const inputRef = React.useRef();
   const [keyword, setKeyword] = useState("");
   const [showList, setShowList] = useState(false);
+
   const [presetTitle, setPresetTitle] = useState("");
   const [presetNames, setPresetNames] = useState("");
+  const [presetId, setPresetId] = useState("");
   const [preset, setPreset] = useState({"" : []});
+
   const [selectedList, setSelectedList] = useState("");
   const [filteredList, setFilteredList] = useState([]);
   const [sort, setSort] = useState({ key: 'id', dir: 'asc' });
@@ -76,10 +79,12 @@ function App() {
       script.onload = () => {
         setPresetTitle(window.ptitle);
         setPresetNames(window.pnames);
+        setPresetId(window.pid);
         setPreset(window.pdata);
         setSelectedList(window.pnames[0]);
         setFilteredList(window.pdata[window.pnames[0]]);
         setShowList(true);
+        console.log('set preset data');
       };
       if (!document.getElementById('presetdata')) {
         document.body.appendChild(script);
@@ -92,6 +97,7 @@ function App() {
       if (currentUser) {
 
         // ログインしたらレーティングを購読開始
+        console.log("get db data");
         const unsubRatings = subscribeUserRatings(currentUser.uid, (ratingsMap) => {
           setUserRatings(ratingsMap);
         });
@@ -163,10 +169,10 @@ function App() {
     </div>
   )};
 
-  const onRatingChange = async (presetId, newRating) => {
+  const onRatingChange = async (key, newRating) => {
     if (!user) return;
     // Firebaseに保存
-    await setRating(user.uid, presetId, newRating);
+    await setRating(presetId, user.uid, key, newRating);
   };
 
   const ListItems = (props) => {

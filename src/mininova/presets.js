@@ -1,4 +1,5 @@
 ptitle = 'Novation MiniNova';
+pid = "b";
 pnames = ['Preset'];
 pdata = {};
 pdata['Preset'] = [

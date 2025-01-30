@@ -1,4 +1,5 @@
 ptitle = 'Roland MC-101';
+pid = "a";
 pnames = ['Tone', 'Dr.Kit', 'Dr.Inst'];
 pdata = {};
 pdata['Tone'] = [

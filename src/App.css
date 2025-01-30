@@ -197,7 +197,7 @@
 }
 
 .star {
-  font-size: 1.0rem;
+  font-size: 1.1rem;
 }
 
 
@@ -238,7 +238,7 @@ h2 {
     --dt-status-away-color: lightsalmon;
     --dt-status-offline-color: lightgray;
   
-    --dt-padding: 2px;
+    --dt-padding: 7px;
     --dt-padding-s: 6px;
     --dt-padding-xs: 2px;
   
@@ -272,7 +272,7 @@ h2 {
     max-width: 800px;
     min-width: 400px;
     margin: 0 auto;
-    font-size: 12px;
+    font-size: 15px;
   }
   
   .datatable-container .header-tools {
@@ -396,7 +396,6 @@ h2 {
   .datatable-container .datatable th {
     font-weight: bold;
     text-align: left;
-    padding-left: 30px;
     border-bottom: solid 1px var(--dt-border-color);
     background-color: var(--dt-header-color);
     cursor: pointer;
