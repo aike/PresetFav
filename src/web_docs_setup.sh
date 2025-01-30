@@ -1,5 +1,7 @@
 # web docs setup bash
 
+npm run build
+
 rm -rf ../docs/mc101
 rm -rf ../docs/mininova
 rm -rf ../docs/sh32
