@@ -50,7 +50,7 @@ pdata['Preset'] = [
   {id:"e65",name:"Nylon Choir",num:"I-65",cat:"Guitar & Clavi"},
   {id:"e66",name:"Scraping Bone",num:"I-66",cat:"Layered Sound"},
   {id:"e67",name:"Hybrid Strings",num:"I-67",cat:"Pad"},
-  {id:"e68",name:"JD-Bells 1",num:"I-68",cat:"Ethnic Pipe, Bell, etc."},
+  {id:"e68",name:"JD-bells 1",num:"I-68",cat:"Ethnic Pipe, Bell, etc."},
   {id:"e71",name:"1974!",num:"I-71",cat:"Electric Music"},
   {id:"e72",name:"Polysynth",num:"I-72",cat:"Analog synthesizer"},
   {id:"e73",name:"Metallic Rhodes",num:"I-73",cat:"Keyboard"},
@@ -64,7 +64,7 @@ pdata['Preset'] = [
   {id:"e83",name:"Waveola Keys",num:"I-83",cat:"Keyboard"},
   {id:"e84",name:"Tekno Funk Bass",num:"I-84",cat:"Bass & Solo"},
   {id:"e85",name:"Backwards *60's",num:"I-85",cat:"Guitar & Clavi"},
-  {id:"e86",name:"ChinkvoxBass",num:"I-86",cat:"Layered Sound"},
+  {id:"e86",name:"Chinkvox/Bass",num:"I-86",cat:"Layered Sound"},
   {id:"e87",name:"Bottle It",num:"I-87",cat:"Pad"},
   {id:"e88",name:"Doo Pipe",num:"I-88",cat:"Ethnic Pipe, Bell, etc."},
 ];
