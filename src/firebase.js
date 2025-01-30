@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, GoogleAuthProvider, TwitterAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
-import { getFirestore, doc, setDoc, deleteDoc, collection, onSnapshot } from 'firebase/firestore';
+import { getFirestore, doc, query, where, setDoc, deleteDoc, collection, onSnapshot } from 'firebase/firestore';
 import { firebaseConfig } from './firebaseConfig';
 
 const app = initializeApp(firebaseConfig);
@@ -41,13 +41,26 @@ export const setRating = async (listid, uid, key, rating) => {
 };
 
 // リスナー (ユーザーのレーティング全件を取得)
-export const subscribeUserRatings = (uid, callback) => {
+export const subscribeUserRatings = (listid, uid, callback) => {
+  console.log("listid = " + listid);
   const ratingsRef = collection(db, 'fav', uid, 'favs');
-  return onSnapshot(ratingsRef, (snapshot) => {
+  if (listid === undefined) {
+    return onSnapshot(ratingsRef, (snapshot) => {
+      const data = {};
+      snapshot.forEach(doc => {
+        data[doc.id] = doc.data();
+      });
+      console.log("data length(all) = " + Object.keys(data).length);
+      callback(data);
+    });  
+  }
+  const q = query(ratingsRef, where("list", "==", listid));
+  return onSnapshot(q, (snapshot) => {
     const data = {};
     snapshot.forEach(doc => {
       data[doc.id] = doc.data();
     });
-    callback(data); // { "p001": { rating: 3, ...}, "p005": { rating: 5, ...} }
+    console.log("data length(q) = " + Object.keys(data).length);
+    callback(data);
   });
 };

@@ -84,7 +84,7 @@ function App() {
         setSelectedList(window.pnames[0]);
         setFilteredList(window.pdata[window.pnames[0]]);
         setShowList(true);
-        console.log('set preset data');
+        console.log('set preset data: ' + presetId);
       };
       if (!document.getElementById('presetdata')) {
         document.body.appendChild(script);
@@ -95,10 +95,9 @@ function App() {
     const unsubAuth = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       if (currentUser) {
-
         // ログインしたらレーティングを購読開始
         console.log("get db data");
-        const unsubRatings = subscribeUserRatings(currentUser.uid, (ratingsMap) => {
+        const unsubRatings = subscribeUserRatings(window.pid, currentUser.uid, (ratingsMap) => {
           setUserRatings(ratingsMap);
         });
         // Cleanup
