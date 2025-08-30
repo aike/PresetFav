@@ -68,7 +68,7 @@ pdata['Pattern'] = [
 	{id:"fA63",name:"Downtempo 1",num:"A63",cat:"BPM074"},
 	{id:"fA64",name:"Downtempo 2",num:"A64",cat:"BPM082"},
 	{id:"fA64",name:"Downtempo 3",num:"A64",cat:"BPM130"}
-};
+];
 
 pdata['Sample'] = [
 	{id:"f00.",name:"BD-1",num:"00.",cat:"-"},
@@ -157,7 +157,7 @@ pdata['Sample'] = [
 	{id:"f83.II",name:"Drum Loop-3",num:"83.II",cat:"-"},
 	{id:"f84.II",name:"Drum Loop-4",num:"84.II",cat:"-"},
 	{id:"f85.II",name:"Perc Loop-3",num:"85.II",cat:"-"}
-};
+];
 
 pdata['Song'] = [
 	{id:"fS01",name:"The Shizzle",num:"S01",cat:"-"},
@@ -165,6 +165,5 @@ pdata['Song'] = [
 	{id:"fS03",name:"Heavenly Beatbox",num:"S03",cat:"-"},
 	{id:"fS04",name:"DJ's Don't Dance",num:"S04",cat:"-"},
 	{id:"fS05",name:"Souped Up House",num:"S05",cat:"-"}
-};
-
+];
 
